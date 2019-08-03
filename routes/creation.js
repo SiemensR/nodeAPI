@@ -1,18 +1,19 @@
 var express = require('express');
 var router = express.Router();
 const fs = require('fs');
+const jsonParser = express.json();
 
 /* GET creation listing. */
-router.get('/', function (req, res, next) {
-    res.send('Got a POST request');
-    let student = {
-        "name": 'Mike\n',
-        "age": 23,
-        "\ngender": 'Male\n',
-        "department": 'English\n',
-        "car": 'Honda\n'
+
+router.post('/', jsonParser, function (req, res, next) { 
+    var user_data = req.body;
+    let data1 = user_data.textform; 
+    console.log(data1);
+    res.send(user_data); 
+    let jsonBuilder = {
+        "Data from textArea" : data1
     };
-    let data = JSON.stringify(student);
+    let data = JSON.stringify(jsonBuilder);
     fs.writeFileSync('test.json', data);
 });
 
